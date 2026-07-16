@@ -10,6 +10,8 @@ integrate the result, verify it independently, and persist through goal-closing 
 
 - [`gpt-engineer`](skills/gpt-engineer/) — primary end-to-end engineer with model-routed Codex agents,
   optional safety hooks, research, implementation, integration, verification, and goal persistence.
+- [`gpt-engineer-spark`](skills/gpt-engineer-spark/) — keep a capable lead in control while a
+  model-pinned GPT-5.3-Codex-Spark fleet handles bounded parallel exploration, routine edits, and checks.
 - [`gpt-orchestration`](skills/gpt-orchestration/) — research, build every confirmed finding, integrate, and verify.
 - [`gpt-orchestration-build`](skills/gpt-orchestration-build/) — consume an existing audit or finding list and carry every item to a disposition.
 - [`gpt-orchestration-auto`](skills/gpt-orchestration-auto/) — run a persistent `/goal`-style research → build → verify → gap-scan loop.
@@ -19,6 +21,9 @@ integrate the result, verify it independently, and persist through goal-closing 
 ```bash
 npx skills add https://github.com/SYMBaiEX/gpt-orchestration \
   --skill gpt-engineer --agent codex claude-code --global --yes
+
+npx skills add https://github.com/SYMBaiEX/gpt-orchestration \
+  --skill gpt-engineer-spark --agent codex --global --yes
 ```
 
 The repository follows the open [Agent Skills specification](https://agentskills.io/specification)
@@ -32,6 +37,8 @@ Invoke the skill when a task benefits from multiple bounded specialists:
 
 ```text
 Use $gpt-engineer to own this engineering outcome from research through verified implementation.
+
+Use $gpt-engineer-spark to lead this build with a fleet of fast, model-pinned Spark agents.
 
 Use $gpt-orchestration to research this repository, implement every confirmed finding,
 and independently verify the integrated result.
@@ -52,6 +59,16 @@ Restart Codex and Claude Code after registration. For repo-scoped profiles and c
 replace `--global` with `/path/to/repository`. The bootstrap refuses conflicts and does not edit provider
 configuration. When a Codex surface cannot select a custom model natively, the skill includes a guarded
 `codex exec` fallback that pins the requested model and fails closed on repository-scope violations.
+
+For Spark, register its Codex-only profiles separately:
+
+```bash
+python3 ~/.agents/skills/gpt-engineer-spark/scripts/bootstrap.py --global
+python3 ~/.agents/skills/gpt-engineer-spark/scripts/bootstrap.py --check --global
+```
+
+Spark CLI fallback writers operate on isolated candidate copies and return reviewable change bundles;
+the capable main agent integrates them and owns the final repository checks.
 
 ## License
 
