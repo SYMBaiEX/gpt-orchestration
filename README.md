@@ -2,9 +2,9 @@
 
 [![skills.sh](https://skills.sh/b/SYMBaiEX/gpt-orchestration)](https://skills.sh/SYMBaiEX/gpt-orchestration)
 
-An open [Agent Skills](https://agentskills.io/) family for running a real GPT engineer: research the
-codebase, route work across GPT-5.6 Sol, Terra, and Luna, implement confirmed findings, integrate the
-result, verify it independently, and persist through goal-closing cycles.
+An open [Agent Skills](https://agentskills.io/) family for running a real delegated engineer: research
+the codebase, route bounded work across provider-specific models, implement confirmed findings,
+integrate the result, verify it independently, and persist through goal-closing cycles.
 
 ## Skills
 
@@ -17,16 +17,8 @@ result, verify it independently, and persist through goal-closing cycles.
 ## Install
 
 ```bash
-npx skills add SYMBaiEX/gpt-orchestration --skill gpt-engineer -g -y
-npx skills add SYMBaiEX/gpt-orchestration --skill gpt-orchestration -g -y
-npx skills add SYMBaiEX/gpt-orchestration --skill gpt-orchestration-build -g -y
-npx skills add SYMBaiEX/gpt-orchestration --skill gpt-orchestration-auto -g -y
-```
-
-Or select the target agent explicitly:
-
-```bash
-npx skills add SYMBaiEX/gpt-orchestration --skill gpt-orchestration --agent codex -g -y
+npx skills add https://github.com/SYMBaiEX/gpt-orchestration \
+  --skill gpt-engineer --agent codex claude-code --global --yes
 ```
 
 The repository follows the open [Agent Skills specification](https://agentskills.io/specification)
@@ -49,17 +41,17 @@ Use $gpt-orchestration-build to implement every finding in this audit and prove 
 Use $gpt-orchestration-auto to pursue this engineering goal autonomously until it is verified complete.
 ```
 
-`gpt-engineer` includes optional project-local Codex profiles for `gpt-5.6` (Sol),
-`gpt-5.6-terra`, and `gpt-5.6-luna`. After installing the skill, configure a repository only when
-you intend to add `.codex/agents` and hooks:
+skills.sh installs the workflow. Register the bundled user-level Codex and Claude model profiles once:
 
 ```bash
-python3 /path/to/gpt-engineer/scripts/bootstrap_codex.py /path/to/repository
-python3 /path/to/gpt-engineer/scripts/bootstrap_codex.py --check /path/to/repository
+python3 ~/.agents/skills/gpt-engineer/scripts/bootstrap.py --global
+python3 ~/.agents/skills/gpt-engineer/scripts/bootstrap.py --check --global
 ```
 
-The bootstrap merges hooks without overwriting conflicts. On other runtimes, the skills detect
-whether model routing exists and degrade to behavioral profiles without making false model claims.
+Restart Codex and Claude Code after registration. For repo-scoped profiles and conservative Codex hooks,
+replace `--global` with `/path/to/repository`. The bootstrap refuses conflicts and does not edit provider
+configuration. When a Codex surface cannot select a custom model natively, the skill includes a guarded
+`codex exec` fallback that pins the requested model and fails closed on repository-scope violations.
 
 ## License
 
