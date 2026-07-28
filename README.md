@@ -3,8 +3,8 @@
 [![skills.sh](https://skills.sh/b/SYMBaiEX/gpt-orchestration)](https://skills.sh/SYMBaiEX/gpt-orchestration)
 
 An open [Agent Skills](https://agentskills.io/) family for running a real delegated engineer: research
-the codebase, route bounded work across provider-specific models, implement confirmed findings,
-integrate the result, verify it independently, and persist through goal-closing cycles.
+the codebase, route bounded work across exact GPT-5.6 Sol, Terra, and Luna models, implement confirmed
+findings, integrate the result, verify it independently, and persist through bounded goal-closing cycles.
 
 ## Skills
 
@@ -52,11 +52,12 @@ Use $gpt-orchestration-auto to pursue this engineering goal autonomously until i
 skills.sh installs the workflow. Register the bundled user-level Codex and Claude model profiles once:
 
 ```bash
-python3 ~/.agents/skills/gpt-engineer/scripts/bootstrap.py --global
-python3 ~/.agents/skills/gpt-engineer/scripts/bootstrap.py --check --global
+python3 ~/.agents/skills/gpt-engineer/scripts/bootstrap.py --provider codex --upgrade --global
+python3 ~/.agents/skills/gpt-engineer/scripts/bootstrap.py --provider codex --check --global
 ```
 
-Restart Codex and Claude Code after registration. For repo-scoped profiles and conservative Codex hooks,
+Use `--provider all --upgrade` only when Claude profiles are also wanted. Restart the selected
+clients after registration. For repo-scoped profiles and conservative Codex hooks,
 replace `--global` with `/path/to/repository`. The bootstrap refuses conflicts and does not edit provider
 configuration. When a Codex surface cannot select a custom model natively, the skill includes a guarded
 `codex exec` fallback that pins the requested model and fails closed on repository-scope violations.
@@ -73,11 +74,11 @@ the capable main agent integrates them and owns the final repository checks.
 
 ## Dynamic workflows
 
-GPT Engineer now selects the orchestration surface from the work: native Codex subagents for a few
-shards, exact model-pinned runners when routing must be proven, dependency-derived Spark waves for
-fast bounded work, and Claude Code saved workflows for repeatable high-fanout audits or migrations.
-Cross-provider transitions remain with the capable outer lead; Claude workflows cannot select GPT
-models. Writer delegates return candidate bundles and never silently mutate the source checkout.
+GPT Engineer selects the smallest useful orchestration surface from the work: native GPT-5.6
+subagents for a few shards or exact model-pinned runners when routing must be proven. Spark and
+Claude workflows are explicit opt-in surfaces, never automatic fallbacks from latest-only mode.
+Follow-up cycles are delta-only. Writer delegates clone tracked plus non-ignored dirty state,
+return candidate bundles, and never silently mutate the source checkout.
 
 Install the companion `claude-multi-agent` skill from `SYMBaiEX/skills` to add the saved
 `gpt-engineer-dynamic` JavaScript workflow and its headless runner.
