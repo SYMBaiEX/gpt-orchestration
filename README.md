@@ -9,7 +9,8 @@ findings, integrate the result, verify it independently, and persist through bou
 ## Skills
 
 - [`gpt-engineer`](skills/gpt-engineer/) — primary end-to-end engineer with model-routed Codex agents,
-  optional safety hooks, research, implementation, integration, verification, and goal persistence.
+  optional safety hooks, research, implementation, integration, verification, goal persistence, and
+  task-owned resource teardown.
 - [`gpt-engineer-spark`](skills/gpt-engineer-spark/) — keep a capable lead in control while a
   model-pinned GPT-5.3-Codex-Spark fleet handles dependency-aware exploration, isolated candidate
   edits, and checks.
@@ -70,7 +71,9 @@ python3 ~/.agents/skills/gpt-engineer-spark/scripts/bootstrap.py --check --globa
 ```
 
 Spark CLI fallback writers operate on isolated candidate copies and return reviewable change bundles;
-the capable main agent integrates them and owns the final repository checks.
+the capable main agent integrates them, owns the final repository checks, and reclaims task-owned
+agents, subprocesses, listeners, and temporary worktrees. Shared MCP services and other active tasks
+are never cleanup targets.
 
 ## Dynamic workflows
 
