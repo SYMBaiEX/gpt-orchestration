@@ -63,6 +63,19 @@ replace `--global` with `/path/to/repository`. The bootstrap refuses conflicts a
 configuration. When a Codex surface cannot select a custom model natively, the skill includes a guarded
 `codex exec` fallback that pins the requested model and fails closed on repository-scope violations.
 
+Codex CLI 0.144.x may advertise Sol/Terra as Multi-Agent V2 while Luna remains V1. GPT Engineer
+includes a temporary, fail-closed compatibility helper and a dedicated Luna Max/Fast profile:
+
+```bash
+python3 ~/.agents/skills/gpt-engineer/scripts/configure_luna_v2.py --apply --enable-fast-mode
+python3 ~/.agents/skills/gpt-engineer/scripts/configure_luna_v2.py --check --enable-fast-mode
+```
+
+The helper derives a private catalog from the current Codex cache, changes only Luna's routing
+version, backs up the user's configuration, and requires a full Codex restart. It refuses unknown
+catalog states. Remove it with `--disable` once the stock catalog reports Luna V2. Luna Max/Fast is
+opt-in; the ordinary Luna low/medium routes remain the economical defaults.
+
 For Spark, register its Codex-only profiles separately:
 
 ```bash
