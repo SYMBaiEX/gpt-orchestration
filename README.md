@@ -71,8 +71,9 @@ python3 ~/.agents/skills/gpt-engineer/scripts/configure_luna_v2.py --apply --ena
 python3 ~/.agents/skills/gpt-engineer/scripts/configure_luna_v2.py --check --enable-fast-mode
 ```
 
-The helper derives a private catalog from the current Codex cache, changes only Luna's routing
-version, backs up the user's configuration, and requires a full Codex restart. It refuses unknown
+The helper derives a private catalog from the current Codex cache, changes Luna's routing version,
+materializes the schema field omitted by the cache, validates it with a fresh CLI process, backs up
+the user's configuration, and requires a full Codex restart. It refuses unknown
 catalog states. Remove it with `--disable` once the stock catalog reports Luna V2. Luna Max/Fast is
 opt-in; the ordinary Luna low/medium routes remain the economical defaults.
 
