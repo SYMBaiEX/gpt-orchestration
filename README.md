@@ -11,6 +11,8 @@ findings, integrate the result, verify it independently, and persist through bou
 - [`gpt-engineer`](skills/gpt-engineer/) — primary end-to-end engineer with model-routed Codex agents,
   optional safety hooks, research, implementation, integration, verification, goal persistence, and
   task-owned resource teardown.
+- [`gpt-engineer-mem`](skills/gpt-engineer-mem/) — memory-aware engineer with bounded Claude Mem or
+  Codex recall, live freshness checks, GPT-5.6 delivery, and read-only memory diagnostics.
 - [`gpt-engineer-spark`](skills/gpt-engineer-spark/) — keep a capable lead in control while a
   model-pinned GPT-5.3-Codex-Spark fleet handles dependency-aware exploration, isolated candidate
   edits, and checks.
@@ -23,6 +25,10 @@ findings, integrate the result, verify it independently, and persist through bou
 ```bash
 npx skills add https://github.com/SYMBaiEX/gpt-orchestration \
   --skill gpt-engineer --agent codex claude-code --global --yes
+
+npx skills add https://github.com/SYMBaiEX/gpt-orchestration \
+  --skill gpt-engineer gpt-engineer-mem \
+  --agent codex claude-code --global --yes
 
 npx skills add https://github.com/SYMBaiEX/gpt-orchestration \
   --skill gpt-engineer-spark --agent codex --global --yes
@@ -39,6 +45,9 @@ Invoke the skill when a task benefits from multiple bounded specialists:
 
 ```text
 Use $gpt-engineer to own this engineering outcome from research through verified implementation.
+
+Use $gpt-engineer-mem to recall relevant prior work, verify it against the current codebase,
+and deliver this engineering outcome end to end.
 
 Use $gpt-engineer-spark to lead this build with a fleet of fast, model-pinned Spark agents.
 
